@@ -1,10 +1,10 @@
 const express = require('express');
-const app = express();
+const router = express.Router();
 const Usuario = require('../models/usuario')//importo modelo bd
 const bcrypt =require('bcrypt');
 const _ = require('underscore');
 
-app.get('/usuario', function (req, res) {//le lleva algo al usuario
+router.get('/', function (req, res) {//le lleva algo al usuario
     
     let desde = req.query.desde || 0;//ver desde que registro
     desde = Number(desde);
@@ -34,7 +34,7 @@ app.get('/usuario', function (req, res) {//le lleva algo al usuario
 
   });
 
-  app.post('/usuario', function (req, res) {//crear nuevo registros
+  router.post('/', function (req, res) {//crear nuevo registros
     let body = req.body;//trae info que pasen por la url
   
 let usuario = new Usuario({
@@ -60,7 +60,7 @@ res.json({
   });
 
 
-  app.put('/usuario/:id',function(req,res){//put parra actualizar data-registros
+  router.put('/:id',function(req,res){//put parra actualizar data-registros
   
       let id=req.params.id;
       let body =_.pick(req.body,['nombre','email','img','role','estado']); 
@@ -78,33 +78,7 @@ res.json({
         });
       })
   })
-//   app.delete('/usuario/:id',function(req,res){//Sirve para borrar o cambiar el estado de algo
-//   let id = req.params.id;
-
-//     Usuario.findByIdAndRemove(id,(err,usuarioBorrado)=>{
-//         if(err){
-//             return res.status(400).json({
-//                 ok:false,
-//                 err
-//             });
-//         };
-//         if(!usuarioBorrado){
-//             return res.status(400).json({
-//                 ok:false,
-//                 err:{
-//                     message:'Usuario no encontrado'
-//                 }
-//             });
-//         };
-//         res.json({
-//             ok:true,
-//             usuario:usuarioBorrado
-//         })
-//     })
-
-//   })
-
-  app.delete('/usuario/:id',function(req,res){//put parra actualizar data-registros
+  router.delete('/:id',function(req,res){//put parra actualizar data-registros
   
     let id=req.params.id;
     
@@ -122,4 +96,4 @@ res.json({
     })
 })
 
-  module.exports=app;
+  module.exports=router;

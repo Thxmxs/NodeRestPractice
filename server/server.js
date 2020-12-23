@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 //Importo archivo app con peticiones
-app.use(require('./routes/usuario'))
+app.use(require('./routes'))
 
 
 
